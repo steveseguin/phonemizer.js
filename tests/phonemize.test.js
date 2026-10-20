@@ -37,6 +37,13 @@ describe("phonemizer", () => {
       }
     });
 
+    test("switches back to a supported language alias", async () => {
+      await phonemize("hi and bye", "en-us");
+      expect(await phonemize("hi and bye", "en-gb")).toEqual(["hˈaɪ and bˈaɪ"]);
+      await phonemize("Hello world.", "en-gb-scotland");
+      expect(await phonemize("Hello world.", "en-gb")).toEqual(["həlˈəʊ wˈɜːld"]);
+    });
+
     test("unsupported language", async () => {
       await expect(phonemize("Hello, world!", "unsupported")).rejects.toThrow();
     });
