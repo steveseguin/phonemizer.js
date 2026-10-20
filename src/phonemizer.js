@@ -68,7 +68,9 @@ export const phonemize = async (text, language = "en-us") => {
       `Invalid language identifier: "${language}". Should be one of: ${Array.from(identifiers).toSorted().join(", ")}.`,
     );
   }
-  worker.set_voice(language);
+  if (worker.set_voice(language) !== 0) {
+    worker.set_voice("", language);
+  }
 
   return (
     worker
